@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BillboardApp</string>
+    <string name="title_billboard">Billboard</string>
+    <string name="title_populars">Populars</string>
+    <string name="title_top_rated">Top Rated</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
