@@ -9,22 +9,44 @@
         android:id="@+id/navigation_billboard"
         android:name="com.smartsolution.billboardapp.view.BillboardFragment"
         android:label="@string/title_billboard"
-        tools:layout="@layout/fragment_billboard" />
+        tools:layout="@layout/fragment_billboard" >
+        <action
+            android:id="@+id/action_navigation_billboard_to_navigation_movie"
+            app:destination="@id/navigation_movie" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_populars"
         android:name="com.smartsolution.billboardapp.view.PopularsFragment"
         android:label="@string/title_populars"
-        tools:layout="@layout/fragment_populars" />
+        tools:layout="@layout/fragment_populars" >
+        <action
+            android:id="@+id/action_navigation_populars_to_navigation_movie"
+            app:destination="@id/navigation_movie" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_top_rated"
         android:name="com.smartsolution.billboardapp.view.TopRatedFragment"
         android:label="@string/title_top_rated"
-        tools:layout="@layout/fragment_top_rated" />
+        tools:layout="@layout/fragment_top_rated" >
+        <action
+            android:id="@+id/action_navigation_top_rated_to_navigation_movie"
+            app:destination="@id/navigation_movie" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_movie"
         android:name="com.smartsolution.billboardapp.view.MovieFragment"
-        android:label="fragment_movie"
-        tools:layout="@layout/fragment_movie" />
+        android:label="@string/title_movie"
+        tools:layout="@layout/fragment_movie" >
+        <action
+            android:id="@+id/action_navigation_movie_to_navigation_billboard"
+            app:destination="@id/navigation_billboard" />
+        <action
+            android:id="@+id/action_navigation_movie_to_navigation_populars"
+            app:destination="@id/navigation_populars" />
+        <action
+            android:id="@+id/action_navigation_movie_to_navigation_top_rated"
+            app:destination="@id/navigation_top_rated" />
+    </fragment>
 </navigation>

@@ -6,18 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.smartsolution.billboardapp.R
 import com.smartsolution.billboardapp.databinding.FragmentPopularsBinding
 import com.smartsolution.billboardapp.model.network.MovieModel
 import com.smartsolution.billboardapp.viewmodel.MovieListViewModel
 import com.smartsolution.billboardapp.view.adapter.MoviesAdapter
+import com.smartsolution.billboardapp.viewmodel.MovieViewModel
 
 class PopularsFragment : Fragment() {
 
     private var _binding: FragmentPopularsBinding? = null
     private lateinit var adapter: MoviesAdapter
-    private lateinit var viewModel: MovieListViewModel
+    private val movieListviewModel: MovieListViewModel by viewModels()
+    private val movieViewModel: MovieViewModel by activityViewModels()
 
     private val binding get() = _binding!!
 
@@ -26,18 +32,16 @@ class PopularsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[MovieListViewModel::class.java]
         _binding = FragmentPopularsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerView()
-        viewModel.getPopulars()
+        movieListviewModel.getPopulars()
 
-        viewModel.listMovies.observe(viewLifecycleOwner) {
+        movieListviewModel.listMovies.observe(viewLifecycleOwner) {
             adapter.listMovies = it
             adapter.notifyDataSetChanged()
         }
@@ -55,7 +59,8 @@ class PopularsFragment : Fragment() {
     }
 
     private fun onItemSelected(movie: MovieModel) {
-        Toast.makeText(requireContext(), movie.originalTitle, Toast.LENGTH_SHORT).show()
+        movieViewModel.setMovie(movie)
+        findNavController().navigate(R.id.action_navigation_populars_to_navigation_movie)
     }
 
     override fun onDestroyView() {

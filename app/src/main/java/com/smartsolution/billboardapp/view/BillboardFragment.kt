@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.smartsolution.billboardapp.R
 import com.smartsolution.billboardapp.databinding.FragmentBillboardBinding
 import com.smartsolution.billboardapp.model.network.MovieModel
 import com.smartsolution.billboardapp.viewmodel.MovieListViewModel
@@ -19,7 +22,7 @@ class BillboardFragment : Fragment() {
     private var _binding: FragmentBillboardBinding? = null
     private lateinit var adapter: MoviesAdapter
     private val movieListviewModel: MovieListViewModel by viewModels()
-    private val viewMovieModel: MovieViewModel by viewModels()
+    private val movieViewModel: MovieViewModel by activityViewModels()
 
     private val binding get() = _binding!!
 
@@ -34,9 +37,9 @@ class BillboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerView()
         movieListviewModel.getBillboard()
+
         movieListviewModel.listMovies.observe(viewLifecycleOwner) {
             adapter.listMovies = it
             adapter.notifyDataSetChanged()
@@ -55,7 +58,8 @@ class BillboardFragment : Fragment() {
     }
 
     private fun onItemSelected(movie: MovieModel) {
-        viewMovieModel.setMovie(movie)
+        movieViewModel.setMovie(movie)
+        findNavController().navigate(R.id.action_navigation_billboard_to_navigation_movie)
     }
 
     override fun onDestroyView() {

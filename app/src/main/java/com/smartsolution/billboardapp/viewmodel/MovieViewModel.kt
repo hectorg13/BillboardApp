@@ -13,7 +13,7 @@ class MovieViewModel : ViewModel() {
         _currentMovie.value = movie
     }
 
-    init {
+    /*init {
         _currentMovie.value = MovieModel("Default", "Default", "Default", "Default", "Default", "Default", "Default")
-    }
+    }*/
 }
